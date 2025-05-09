@@ -1,14 +1,22 @@
 import express from 'express'
 import sequelize from '../config/config.js';
+import cors from 'cors'
 import { defineRelations } from '../models/relations.js';
 import { initializeData } from '../mocks/datamock.js';
 import colors from 'colors'
 import router from './routes.js';
 
-const app = express()
-const port = 3000
+const app = express();
+const port = 3000;
 
-app.use(router)
+app.use(express.json());
+
+
+app.use(cors({
+    origin: 'http://localhost:5173'
+}));
+
+app.use(router);
 
 async function main(params) {
     try {
