@@ -1,13 +1,13 @@
 // src/config/database.js
-import dotenv from 'dotenv';
 import { Sequelize } from 'sequelize';
 
-dotenv.config({path: '../../.env'});
+const DB_URL = 'mysql://root:fCPbbnJPiiOceMIygqVoLXJBWKLCpflY@tramway.proxy.rlwy.net:28337/railway';
 
+console.log('URL BASE DE DATOS', DB_URL);
 
-const sequelize = new Sequelize(process.env.DB_URL, {
+const sequelize = new Sequelize(DB_URL, {
   dialect: 'mysql',
-  logging: false
+  logging: false,
 });
 
 export default sequelize;
