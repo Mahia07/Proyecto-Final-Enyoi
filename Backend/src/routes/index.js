@@ -13,8 +13,9 @@ app.use(express.json());
 
 
 app.use(cors({
-    origin: 'http://localhost:5173'
-}));
+    origin: ['http://localhost:5173', 'https://proyecto-final-enyoi-qvop.vercel.app']
+  }));
+  
 
 app.use(router);
 
