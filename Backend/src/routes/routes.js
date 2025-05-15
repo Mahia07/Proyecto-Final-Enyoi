@@ -112,7 +112,7 @@ router.put("/updateProfile/:id", verifyToken, async (req, res) => {
 
     if (!user) {
       console.log("no se encontro usuario".red);
-      return res.status(404).send("No se envontro usuario");
+      return res.status(404).send("No se encontro usuario");
     }
 
     await user.update({
@@ -181,7 +181,6 @@ router.put("/tasks/:taskId", verifyToken, async (req, res) => {
   const { taskId } = req.params;
   let { title, description, status, dateLimit, categoryId } = req.body;
 
-  // Validación básica
   if (!title || !description || !status || !dateLimit) {
     return res.status(400).json({ 
       message: "Todos los campos son requeridos",
@@ -190,7 +189,6 @@ router.put("/tasks/:taskId", verifyToken, async (req, res) => {
   }
 
   try {
-    // Validar y formatear fecha
     let formattedDateLimit;
     try {
       formattedDateLimit = dateLimit.includes('T') 
@@ -205,7 +203,6 @@ router.put("/tasks/:taskId", verifyToken, async (req, res) => {
 
     const userId = req.user.id;
     
-    // Buscar y validar tarea
     const task = await Tasks.findOne({
       where: { id: taskId, userId },
     });
@@ -218,7 +215,7 @@ router.put("/tasks/:taskId", verifyToken, async (req, res) => {
       });
     }
 
-    // Actualizar campos
+  
     task.title = title;
     task.description = description;
     task.status = status;
@@ -228,10 +225,10 @@ router.put("/tasks/:taskId", verifyToken, async (req, res) => {
       task.categoryId = categoryId;
     }
 
-    // Guardar cambios
+  
     const updatedTask = await task.save();
 
-    // Respuesta exitosa
+    
     res.status(200).json({
       success: true,
       message: "Tarea actualizada correctamente",
@@ -370,7 +367,7 @@ router.post("/CreateCategory", verifyToken, async (req, res) => {
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 });
-// Obtener categorías del usuario autenticado
+
 router.get("/getCategories", verifyToken, async (req, res) => {
   try {
     const categories = await Category.findAll({
@@ -386,7 +383,7 @@ router.get("/getCategories", verifyToken, async (req, res) => {
   }
 });
 
-// Eliminar una categoría
+
 router.delete("/deleteCategory/:id", verifyToken, async (req, res) => {
   const { id } = req.params;
 

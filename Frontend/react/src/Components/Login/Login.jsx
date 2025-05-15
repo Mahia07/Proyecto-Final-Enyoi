@@ -21,22 +21,26 @@ const LoginForm = () => {
     e.preventDefault();
     setError(null);
     setSuccess(false);
-    navigate("/Home");
 
     try {
       const result = await login(formData);
       localStorage.setItem("token", result.token);
       console.log("Respuesta del servidor:", result);
       setSuccess(true);
+      navigate("/Home");
     } catch (error) {
       console.error("Error capturado en el catch:", error);
-      setError("Error al iniciar sesión");
+      setError("Correo o contraseña incorrectos");
     }
   };
+
   return (
     <div className="formContainer">
       <form onSubmit={handleSubmit} className="form">
         <h2 className="formTitle">Iniciar Sesión</h2>
+
+        {error && <p className="errorMessage">{error}</p>}
+
         <div className="inputGroup">
           <label>Correo electrónico:</label>
           <input
@@ -60,7 +64,6 @@ const LoginForm = () => {
           <p
             className="formText"
             onClick={() => navigate("/ForgotPassword")}
-            
           >
             ¿Olvidaste tu contraseña?
           </p>
@@ -70,10 +73,11 @@ const LoginForm = () => {
           Entrar
         </button>
         <p onClick={() => navigate("/register")} className="formText">
-          No estas Registrado?
+          ¿No estás registrado?
         </p>
       </form>
     </div>
   );
 };
+
 export default LoginForm;

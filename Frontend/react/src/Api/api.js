@@ -1,6 +1,6 @@
 export const register = async ({ name, email, password, photo }) => {
   try {
-    const response = await fetch("https://proyecto-final-enyoi.onrender.com/register", {
+    const response = await fetch("http://localhost:3000/register", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -31,7 +31,7 @@ export const register = async ({ name, email, password, photo }) => {
 
 export const login = async ({ email, password }) => {
   try {
-    const response = await fetch("https://proyecto-final-enyoi.onrender.com/login", {
+    const response = await fetch("http://localhost:3000/login", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -56,7 +56,7 @@ export const login = async ({ email, password }) => {
 };
 export const getProfile = async (token) => {
   try {
-    const response = await fetch("https://proyecto-final-enyoi.onrender.com/profile", {
+    const response = await fetch("http://localhost:3000/profile", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -79,7 +79,7 @@ export const getProfile = async (token) => {
 };
 export const updateProfile = async ({ id, name, email, token }) => {
   try {
-    const response = await fetch(`https://proyecto-final-enyoi.onrender.com/updateProfile/${id}`, {
+    const response = await fetch(`http://localhost:3000/updateProfile/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -100,10 +100,10 @@ export const updateProfile = async ({ id, name, email, token }) => {
   }
 };
 export const createTask = async ({ title, description, status, dateLimit, categoryId, token }) => {
-  
+  console.log(token, 'DESDE API.JS')
   try {
     console.log('Token en createTask:', token); 
-    const response = await fetch(`https://proyecto-final-enyoi.onrender.com/createTasks`, {
+    const response = await fetch(`http://localhost:3000/createTasks`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -128,7 +128,7 @@ export const updateTask = async ({ taskId, title, description, status, dateLimit
     console.log('Token en updateTask:', token);
     console.log('Datos enviados:', { taskId, title, description, status, dateLimit, categoryId });
     
-    const response = await fetch(`https://proyecto-final-enyoi.onrender.com/tasks/${taskId}`, {
+    const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -137,13 +137,12 @@ export const updateTask = async ({ taskId, title, description, status, dateLimit
       body: JSON.stringify({ 
         title, 
         description, 
-        status: status === "proceso" ? "en-progreso" : status, // Ajusta el status
+        status: status === "proceso" ? "en-progreso" : status,
         dateLimit,
         categoryId 
       }),
     });
 
-    if (response.status === 401) throw new Error("Token inválido o expirado");
     if (response.status === 404) throw new Error("Tarea no encontrada");
     
     const data = await response.json();
@@ -157,7 +156,7 @@ export const updateTask = async ({ taskId, title, description, status, dateLimit
 };
 export const getTasks = async (token) => {
   try {
-    const response = await fetch(`https://proyecto-final-enyoi.onrender.com/tasks`, {
+    const response = await fetch(`http://localhost:3000/tasks`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -183,7 +182,7 @@ export const getTasks = async (token) => {
 
 export const deleteTask = async (taskId, token) => {
   try {
-    const response = await fetch(`https://proyecto-final-enyoi.onrender.com/tasks/${taskId}`, {
+    const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -206,7 +205,7 @@ export const deleteTask = async (taskId, token) => {
 
 export const forgotPassword = async (email) => {
   try {
-    const response = await fetch("https://proyecto-final-enyoi.onrender.com/forgotPassword", {
+    const response = await fetch("http://localhost:3000/forgotPassword", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email }),
@@ -224,7 +223,7 @@ export const forgotPassword = async (email) => {
 
 export const resetPassword = async (token, password) => {
   try {
-    const response = await fetch(`https://proyecto-final-enyoi.onrender.com/resetPassword/${token}`, {
+    const response = await fetch(`http://localhost:3000/resetPassword/${token}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ password }),
@@ -245,7 +244,7 @@ export const createCategory = async ({ name, description }) => {
     const token = localStorage.getItem("token");
     if (!token) throw new Error("No hay token de autenticación");
 
-    const response = await fetch("https://proyecto-final-enyoi.onrender.com/CreateCategory", {
+    const response = await fetch("http://localhost:3000/CreateCategory", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -254,10 +253,6 @@ export const createCategory = async ({ name, description }) => {
       body: JSON.stringify({ name, description }),
     });
 
-    if (response.status === 401) {
-      localStorage.removeItem("token");
-      throw new Error("Sesión expirada. Por favor inicia sesión nuevamente");
-    }
 
     const data = await response.json();
 
@@ -275,7 +270,7 @@ export const updateCategory = async ({ id, name, description, token }) => {
   try {
     if (!token) throw new Error("Token no proporcionado");
     
-    const response = await fetch(`https://proyecto-final-enyoi.onrender.com/categories/${id}`, {
+    const response = await fetch(`http://localhost:3000/categories/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -304,7 +299,7 @@ export const getCategories = async () => {
   try {
     const token = localStorage.getItem("token");
 
-    const response = await fetch("https://proyecto-final-enyoi.onrender.com/getCategories", {
+    const response = await fetch("http://localhost:3000/getCategories", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -326,10 +321,9 @@ export const getCategories = async () => {
   }
 };
 
-// En tu archivo Api.js, añade esta función:
 export const deleteCategory = async ({ id, token }) => {
   try {
-    const response = await fetch(`https://proyecto-final-enyoi.onrender.com/categories/deleteCategory/${id}`, {
+ const response = await fetch(`http://localhost:3000/deleteCategory/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -351,7 +345,7 @@ export const deleteCategory = async ({ id, token }) => {
 };
 export const getTasksByCategory = async (categoryId, token) => {
   try {
-      const response = await fetch(`https://proyecto-final-enyoi.onrender.com/tasksByCategory/${categoryId}`, {
+      const response = await fetch(`http://localhost:3000/tasksByCategory/${categoryId}`, {
           headers: {
               Authorization: `Bearer ${token}`,
               'Content-Type': 'application/json',
@@ -367,7 +361,7 @@ export const getTasksByCategory = async (categoryId, token) => {
 
       
       const textResponse = await response.text();
-      console.log("Respuesta cruda del servidor:", textResponse);
+      console.log("Respuesta del servidor:", textResponse);
 
     
       const data = JSON.parse(textResponse);

@@ -27,6 +27,7 @@ const Category = () => {
     actions: false
   });
 
+  // Obtener categorías al cargar el componente
   useEffect(() => {
     if (token) {
       fetchCategories();
@@ -35,6 +36,7 @@ const Category = () => {
     }
   }, [token]);
 
+  
   useEffect(() => {
     if (categories.length > 0) {
       categories.forEach(category => {
@@ -86,7 +88,7 @@ const Category = () => {
   const handleCreateTask = async (taskData) => {
     setLoading(prev => ({ ...prev, actions: true }));
     try {
-      await createTask(taskData, token);
+      await createTask({ ...taskData, token });
       setMessage({ 
         text: "Tarea creada correctamente", 
         type: "success" 
@@ -106,7 +108,7 @@ const Category = () => {
   const handleUpdateTask = async (taskData) => {
     setLoading(prev => ({ ...prev, actions: true }));
     try {
-      await updateTask(taskData, token);
+      await updateTask({ ...taskData, token });
       setMessage({ 
         text: "Tarea actualizada correctamente", 
         type: "success" 
@@ -172,64 +174,86 @@ const Category = () => {
       setLoading(prev => ({ ...prev, actions: false }));
     }
   };
+const handleDeleteCategory = async (id) => {
+  const token = localStorage.getItem("token"); 
+  if (!token) {
+    setMessage({ text: "No hay token de autenticación", type: "error" });
+    return;
+  }
 
-  const handleDeleteCategory = async (id) => {
-    const categoryName = categories.find(c => c.id === id)?.name;
-    if (!window.confirm(`¿Estás seguro de que quieres eliminar la categoría "${categoryName}"?`)) {
-      return;
+  const categoryName = categories.find(c => c.id === id)?.name || "Categoría";
+  
+  setLoading(prev => ({ ...prev, actions: true }));
+  
+  try {
+    
+    await deleteCategory({ id, token });
+    
+    setMessage({ 
+      text: `"${categoryName}" eliminada correctamente`, 
+      type: "success" 
+    });
+    
+    
+    setCategories(prev => prev.filter(category => category.id !== id));
+    
+  } catch (error) {
+    let errorMessage = "Error al eliminar categoría";
+    
+    if (error.message.includes("401")) {
+      errorMessage = "Token inválido o expirado";
+    } else if (error.message.includes("404")) {
+      errorMessage = "La categoría ya no existe";
     }
     
-    setLoading(prev => ({ ...prev, actions: true }));
-    try {
-      await deleteCategory(id, token);
-      setMessage({ 
-        text: `Categoría "${categoryName}" eliminada correctamente`, 
-        type: "success" 
-      });
-      await fetchCategories();
-    } catch (error) {
-      let errorMessage = "Error al eliminar categoría";
-      if (error.message.includes("404")) {
-        errorMessage = "La categoría no existe o ya fue eliminada";
-      } else if (error.message.includes("403")) {
-        errorMessage = "No tienes permiso para eliminar esta categoría";
-      } else {
-        errorMessage = error.message || errorMessage;
-      }
-      
-      setMessage({ 
-        text: errorMessage, 
-        type: "error" 
-      });
-    } finally {
-      setLoading(prev => ({ ...prev, actions: false }));
-    }
-  };
-
+    setMessage({ text: errorMessage, type: "error" });
+  } finally {
+    setLoading(prev => ({ ...prev, actions: false }));
+  }
+};
   const handleEditCategory = async (id, updatedName, updatedDescription) => {
-    setLoading(prev => ({ ...prev, actions: true }));
-    try {
-      await updateCategory({ 
-        id, 
-        name: updatedName, 
-        description: updatedDescription
-      }, token);
-      
-      setMessage({ 
-        text: "Categoría actualizada correctamente", 
-        type: "success" 
-      });
-      setEditingCategoryId(null);
-      await fetchCategories();
-    } catch (error) {
-      setMessage({ 
-        text: error.message || "Error al actualizar categoría", 
-        type: "error" 
-      });
-    } finally {
-      setLoading(prev => ({ ...prev, actions: false }));
+  const token = localStorage.getItem("token"); 
+  if (!token) {
+    setMessage({ text: "No hay token de autenticación", type: "error" });
+    return;
+  }
+
+  setLoading(prev => ({ ...prev, actions: true }));
+  
+  try {
+  
+    await updateCategory({ 
+      id, 
+      name: updatedName, 
+      description: updatedDescription,
+      token 
+    });
+    
+    setMessage({ 
+      text: "Categoría actualizada correctamente", 
+      type: "success" 
+    });
+    
+    setEditingCategoryId(null);
+    
+    setCategories(prev => prev.map(cat => 
+      cat.id === id ? { ...cat, name: updatedName, description: updatedDescription } : cat
+    ));
+    
+  } catch (error) {
+    let errorMessage = "Error al actualizar categoría";
+    
+    if (error.message.includes("401")) {
+      errorMessage = "Token inválido o expirado";
+    } else if (error.message.includes("404")) {
+      errorMessage = "La categoría no existe";
     }
-  };
+    
+    setMessage({ text: errorMessage, type: "error" });
+  } finally {
+    setLoading(prev => ({ ...prev, actions: false }));
+  }
+};
 
   const TaskForm = ({ categoryId, onSave, onCancel, initialData }) => {
     const [taskData, setTaskData] = useState({
@@ -264,10 +288,16 @@ const Category = () => {
       }
       
       try {
-        const dataToSend = initialData 
-          ? { ...taskData, taskId: initialData.id }
-          : taskData;
-          
+        const dataToSend = {
+          ...taskData,
+          dateLimit: new Date(taskData.dateLimit).toISOString(),
+          categoryId: categoryId
+        };
+        
+        if (initialData) {
+          dataToSend.taskId = initialData.id;
+        }
+        
         await onSave(dataToSend);
       } catch (error) {
         setError(error.message || "Hubo un error al guardar la tarea.");
@@ -356,7 +386,7 @@ const Category = () => {
     return (
       <>
         {tasks.map(task => (
-          <div key={task.id} className={`task-card ${task.status}`}>
+          <div key={task.id} className={` ${task.status}`}>
             {editingTaskId === task.id ? (
               <TaskForm
                 categoryId={categoryId}
@@ -366,10 +396,11 @@ const Category = () => {
               />
             ) : (
               <>
+              <div>
                 <div className="task-content">
                   <h4>{task.title}</h4>
                   <p>{task.description}</p>
-                  <div className="task-date">📅 {task.dateLimit}</div>
+                  <div className="task-date"> {task.dateLimit}</div>
                 </div>
                 <div className="task-actions">
                   <button 
@@ -397,6 +428,7 @@ const Category = () => {
                     </button>
                   )}
                 </div>
+                </div>
               </>
             )}
           </div>
@@ -412,7 +444,7 @@ const Category = () => {
   };
 
   return (
-    <div className="kanban-container">
+    <div className="tasksContainer">
       {loading.categories && <div className="loading-overlay">Cargando categorías...</div>}
 
       {!showForm ? (
@@ -478,10 +510,10 @@ const Category = () => {
         </div>
       )}
 
-      <div className="kanban-board">
+      <div className="taskContainer">
         {categories.length > 0 ? (
           categories.map((category) => (
-            <div key={category.id} className="kanban-column">
+            <div key={category.id} className="kanbanColumn">
               {editingCategoryId === category.id ? (
                 <div className="task-form-container">
                   <form className="task-form" onSubmit={(e) => {
@@ -556,7 +588,7 @@ const Category = () => {
                       </button>
                     </div>
                   </div>
-                  <div className="tasks-container">
+                  
                     {showTaskForm === category.id && (
                       <TaskForm
                         categoryId={category.id}
@@ -565,7 +597,7 @@ const Category = () => {
                       />
                     )}
                     {renderTasks(tasksByCategory[category.id], category.id)}
-                  </div>
+                
                 </>
               )}
             </div>
@@ -579,4 +611,3 @@ const Category = () => {
 };
 
 export default Category;
-

@@ -42,6 +42,7 @@ const TasksForm = ({ token, onClose, initialData, categoryId, refreshTasks }) =>
     }
 
     try {
+      console.log('token desde TasksForm:', token)
       if (initialData) {
         await updateTask({
           taskId: initialData.id,
@@ -52,6 +53,7 @@ const TasksForm = ({ token, onClose, initialData, categoryId, refreshTasks }) =>
           categoryId: taskData.categoryId,
           token: token
         });
+    
       } else {
         await createTask({
           title: taskData.title,

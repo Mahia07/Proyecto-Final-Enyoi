@@ -4,7 +4,7 @@ import RegisterForm from "./Components/Register/Register";
 import SideBar from "./Components/navBar/navBar";
 import LoginForm from "./Components/Login/Login";
 import Tasks from "./Components/tasks/Tasks";
-import Category from "./Components/Categories/Categories";
+import Category from "./Components/Categories/categories";
 import Profile from "./Components/profile/Profile";
 import ForgotPasswordForm from "./Components/forgotPassword/forgotPasswordForm";
 import ResetPassword from "./Components/forgotPassword/forgotPassword";
@@ -15,6 +15,7 @@ function App() {
       <BrowserRouter>
       <SideBar/>
         <Routes>
+          <Route index element={< LoginForm/>} />
           <Route path="/reset-password/:token" element={<ResetPassword/>}/>
         <Route path="/Home" index element={<Tasks />} />
         <Route path="/ForgotPassword" element={<ForgotPasswordForm/>}/>

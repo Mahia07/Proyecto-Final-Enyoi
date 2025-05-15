@@ -13,3 +13,5 @@ export const defineRelations = () => {
   Tasks.belongsTo(Category, {foreignKey: "categoryId"})
 
 };
+/* has many = uno a muchos
+belongs to = muchos a uno*/
