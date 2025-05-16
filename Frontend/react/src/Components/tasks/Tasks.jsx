@@ -13,16 +13,10 @@ import { useDroppable } from "@dnd-kit/core";
 
 const DroppableColumn = ({ id, children, onAddTaskClick }) => {
   const { setNodeRef } = useDroppable({ id });
-const ColumnTitles = {
-  pendiente: "Por hacer",
-  proceso: "En progreso",
-  completada: "Hecho",
-};
-
   return (
     <div ref={setNodeRef} className="kanbanColumn">
       <div className="columnHeader">
-        <h2>{ColumnTitles[id] || id}</h2>
+          <h2>{id.charAt(0).toUpperCase() + id.slice(1)}</h2>
         <svg
           onClick={() => onAddTaskClick(id)}
           xmlns="http://www.w3.org/2000/svg"
