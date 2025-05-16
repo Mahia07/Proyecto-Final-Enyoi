@@ -14,7 +14,7 @@ app.use(express.json());
 
 app.use(cors({
     origin: [
-        'https://proyecto-final-enyoi-qvop.vercel.app/'
+        'https://proyecto-final-enyoi-qvop.vercel.app'
     ] 
     
   }));
