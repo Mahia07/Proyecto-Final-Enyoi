@@ -86,8 +86,7 @@ const Tasks = () => {
     setEditingTask(task);
     setIsFormVisible(true);
   };
-
-  const handleSaveTask = async (taskData) => {
+const handleSaveTask = async (taskData) => {
     setLoading(true);
     setError(null);
     try {
@@ -117,10 +116,12 @@ const Tasks = () => {
         };
         
         const createdTaskData = await createTask(newTask);
-        console.log('antes de actualizar', tasks)
-        setTasks(prevTasks => [...prevTasks, {...createdTaskData.task}]);
-        console.log('despues de actualizar', newTask)
-        return newTask
+        
+        setTasks(prevTasks => {
+          const updatedTasks = [...prevTasks, createdTaskData.task];
+          console.log('Tareas actualizadas:', updatedTasks);
+          return updatedTasks;
+        });
       }
       setIsFormVisible(false);
       setEditingTask(null);
