@@ -223,7 +223,7 @@ export const forgotPassword = async (email) => {
 
 export const resetPassword = async (token, password) => {
   try {
-    const response = await fetch(`https://back-proyecto-integrador.onrender.com/resetPassword/${token}`, {
+    const response = await fetch(`https://back-proyecto-integrador.onrender.com/reset-password/${token}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ password }),
