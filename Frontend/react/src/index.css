@@ -346,7 +346,7 @@ body {
   font-weight: bold;
   transition: background-color 0.3s ease;
   width: 100%;
-  margin-top: 1.5rem;
+  margin: 1rem;
 }
 
 .btn-edit:hover {
