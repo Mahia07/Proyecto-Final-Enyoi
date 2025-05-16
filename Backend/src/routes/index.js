@@ -14,7 +14,7 @@ app.use(express.json());
 
 app.use(cors({
     origin: [
-        'https://proyecto-final-enyoi-c64z.vercel.app/'
+        'https://proyecto-final-enyoi-c64z.vercel.app'
     ] 
     
   }));
