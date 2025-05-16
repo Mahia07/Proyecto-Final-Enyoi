@@ -116,6 +116,7 @@ const handleSaveTask = async (taskData) => {
         };
         
         const createdTaskData = await createTask(newTask);
+        await fetchTasks()
         
       setTasks(prevTasks => {
   const updatedTasks = [...prevTasks, createdTaskData.task];
