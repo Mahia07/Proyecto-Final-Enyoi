@@ -117,8 +117,10 @@ const Tasks = () => {
         };
         
         const createdTaskData = await createTask(newTask);
+        console.log('antes de actualizar', tasks)
         setTasks(prevTasks => [...prevTasks, {...createdTaskData.task}]);
-
+        console.log('despues de actualizar', newTask)
+        return newTask
       }
       setIsFormVisible(false);
       setEditingTask(null);
