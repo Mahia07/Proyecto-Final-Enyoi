@@ -72,9 +72,7 @@ const Tasks = () => {
     } catch (error) {
       console.error("Error al obtener tareas", error);
       setError("Error al cargar las tareas");
-    } finally {
-      setLoading(false);
-    }
+    } 
   };
 
   const handleAddTaskClick = (columnId) => {
@@ -120,6 +118,7 @@ const Tasks = () => {
         
         const createdTaskData = await createTask(newTask);
         setTasks((prevTasks) => [...prevTasks, createdTaskData.task]);
+        await fetchTasks()
       }
       setIsFormVisible(false);
       setEditingTask(null);
