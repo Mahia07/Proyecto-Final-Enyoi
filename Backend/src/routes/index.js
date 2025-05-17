@@ -11,15 +11,15 @@ const port = 3000;
 
 app.use(express.json());
 
-
 app.use(cors({
-    origin: [
-        'https://proyecto-final-enyoi-qvop.vercel.app'
-    ] 
-    
-  }));
-  
-app.options('*', cors()); 
+  origin: [
+    'https://proyecto-final-enyoi-qvop.vercel.app',
+    'https://proyecto-final-enyoi-c64z.vercel.app'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
+
 
 app.use(router);
 
