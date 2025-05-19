@@ -6,11 +6,10 @@ import { Category } from "../models/category.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import colors from "colors";
-import dotenv from "dotenv";
 import nodemailer from "nodemailer";
 import sequelize from "../config/config.js";
 
-dotenv.config({ path: "../../.env" });
+const SECRET = my_secret
 const router = express.Router();
 router.use(express.json());
 
@@ -74,7 +73,7 @@ router.post("/login", async (req, res) => {
 
     const token = jwt.sign(
       { id: user.id, email: user.email },
-      process.env.SECRET,
+      SECRET,
       { expiresIn: "12h" }
     );
 
@@ -241,7 +240,7 @@ router.put("/tasks/:taskId", verifyToken, async (req, res) => {
       success: false,
       message: "Error interno al actualizar la tarea",
       error: error.message,
-      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+     stack: isDev ? error.stack : undefined
     });
   }
 });
@@ -287,7 +286,7 @@ router.post("/forgotPassword", async (req, res) => {
 
     const newToken = jwt.sign(
       { id: user.id, email: user.email },
-      process.env.SECRET,
+      SECRET,
       { expiresIn: "15m" }
     );
 
@@ -319,7 +318,7 @@ router.post("/reset-password/:token", async (req, res) => {
   const { password } = req.body;
 
   try {
-    const decoded = jwt.verify(token, process.env.SECRET);
+    const decoded = jwt.verify(token, SECRET);
 
     const user = await Users.findOne({ where: { email: decoded.email } });
 
