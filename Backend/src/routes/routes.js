@@ -9,7 +9,7 @@ import colors from "colors";
 import nodemailer from "nodemailer";
 import sequelize from "../config/config.js";
 
-const SECRET = my_secret
+const SECRET = 'my_secret'
 const router = express.Router();
 router.use(express.json());
 
