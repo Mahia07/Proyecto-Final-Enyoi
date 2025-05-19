@@ -1,6 +1,6 @@
 export const register = async ({ name, email, password, photo }) => {
   try {
-    const response = await fetch("https://back-proyecto-integrador.onrender.com/register", {
+    const response = await fetch("https://proyecto-final-enyoi.onrender.com/register", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -31,7 +31,7 @@ export const register = async ({ name, email, password, photo }) => {
 
 export const login = async ({ email, password }) => {
   try {
-    const response = await fetch("https://back-proyecto-integrador.onrender.com/login", {
+    const response = await fetch("https://proyecto-final-enyoi.onrender.com/login", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -56,7 +56,7 @@ export const login = async ({ email, password }) => {
 };
 export const getProfile = async (token) => {
   try {
-    const response = await fetch("https://back-proyecto-integrador.onrender.com/profile", {
+    const response = await fetch("https://proyecto-final-enyoi.onrender.com/profile", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -79,7 +79,7 @@ export const getProfile = async (token) => {
 };
 export const updateProfile = async ({ id, name, email, token }) => {
   try {
-    const response = await fetch(`https://back-proyecto-integrador.onrender.com/updateProfile/${id}`, {
+    const response = await fetch(`https://proyecto-final-enyoi.onrender.com/updateProfile/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ export const createTask = async ({ title, description, status, dateLimit, catego
   console.log(token, 'DESDE API.JS')
   try {
     console.log('Token en createTask:', token); 
-    const response = await fetch(`https://back-proyecto-integrador.onrender.com/createTasks`, {
+    const response = await fetch(`https://proyecto-final-enyoi.onrender.com/createTasks`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -128,7 +128,7 @@ export const updateTask = async ({ taskId, title, description, status, dateLimit
     console.log('Token en updateTask:', token);
     console.log('Datos enviados:', { taskId, title, description, status, dateLimit, categoryId });
     
-    const response = await fetch(`https://back-proyecto-integrador.onrender.com/tasks/${taskId}`, {
+    const response = await fetch(`https://proyecto-final-enyoi.onrender.com/tasks/${taskId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -156,7 +156,7 @@ export const updateTask = async ({ taskId, title, description, status, dateLimit
 };
 export const getTasks = async (token) => {
   try {
-    const response = await fetch(`https://back-proyecto-integrador.onrender.com/tasks`, {
+    const response = await fetch(`https://proyecto-final-enyoi.onrender.com/tasks`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -182,7 +182,7 @@ export const getTasks = async (token) => {
 
 export const deleteTask = async (taskId, token) => {
   try {
-    const response = await fetch(`https://back-proyecto-integrador.onrender.com/tasks/${taskId}`, {
+    const response = await fetch(`https://proyecto-final-enyoi.onrender.com/tasks/${taskId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -205,7 +205,7 @@ export const deleteTask = async (taskId, token) => {
 
 export const forgotPassword = async (email) => {
   try {
-    const response = await fetch("https://back-proyecto-integrador.onrender.com/forgotPassword", {
+    const response = await fetch("https://proyecto-final-enyoi.onrender.com/forgotPassword", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email }),
@@ -223,7 +223,7 @@ export const forgotPassword = async (email) => {
 
 export const resetPassword = async (token, password) => {
   try {
-    const response = await fetch(`https://back-proyecto-integrador.onrender.com/reset-password/${token}`, {
+    const response = await fetch(`https://proyecto-final-enyoi.onrender.com/reset-password/${token}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ password }),
@@ -253,7 +253,7 @@ export const createCategory = async ({ name, description }) => {
     const token = localStorage.getItem("token");
     if (!token) throw new Error("No hay token de autenticación");
 
-    const response = await fetch("https://back-proyecto-integrador.onrender.com/CreateCategory", {
+    const response = await fetch("https://proyecto-final-enyoi.onrender.com/CreateCategory", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -279,7 +279,7 @@ export const updateCategory = async ({ id, name, description, token }) => {
   try {
     if (!token) throw new Error("Token no proporcionado");
     
-    const response = await fetch(`https://back-proyecto-integrador.onrender.com/categories/${id}`, {
+    const response = await fetch(`https://proyecto-final-enyoi.onrender.com/categories/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -308,7 +308,7 @@ export const getCategories = async () => {
   try {
     const token = localStorage.getItem("token");
 
-    const response = await fetch("https://back-proyecto-integrador.onrender.com/getCategories", {
+    const response = await fetch("https://proyecto-final-enyoi.onrender.com/getCategories", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -332,7 +332,7 @@ export const getCategories = async () => {
 
 export const deleteCategory = async ({ id, token }) => {
   try {
- const response = await fetch(`https://back-proyecto-integrador.onrender.com/deleteCategory/${id}`, {
+ const response = await fetch(`https://proyecto-final-enyoi.onrender.com/deleteCategory/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -354,7 +354,7 @@ export const deleteCategory = async ({ id, token }) => {
 };
 export const getTasksByCategory = async (categoryId, token) => {
   try {
-      const response = await fetch(`https://back-proyecto-integrador.onrender.com/tasksByCategory/${categoryId}`, {
+      const response = await fetch(`https://proyecto-final-enyoi.onrender.com/tasksByCategory/${categoryId}`, {
           headers: {
               Authorization: `Bearer ${token}`,
               'Content-Type': 'application/json',
