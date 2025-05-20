@@ -9,13 +9,7 @@ export const register = async ({ name, email, password, photo }) => {
     });
 
     const responseText = await response.text();
-    console.log("Enviando Datos registrados:", {
-      name,
-      email,
-      password,
-      photo,
-    });
-
+   
     console.log("Respuesta del servidor:", responseText);
 
     if (!response.ok) {

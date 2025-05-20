@@ -1,16 +1,16 @@
 // src/config/database.js
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 import { Sequelize } from 'sequelize';
 
-dotenv.config()
+dotenv.config();
 
 const sequelize = new Sequelize(
   'railway', 
   'root',    
-  'fCPbbnJPiiOceMIygqVoLXJBWKLCpflY',
+  'tjywJKpiKxfCPYhZVUBZEVNaKgJOOCoe', 
   {
-    host: 'tramway.proxy.rlwy.net',
-    port: 28337,
+    host: 'ballast.proxy.rlwy.net', 
+    port: 40523,                    
     dialect: 'mysql',
     logging: false
   }
