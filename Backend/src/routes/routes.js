@@ -13,6 +13,11 @@ const SECRET = 'my_secret'
 const router = express.Router();
 router.use(express.json());
 
+router.use((req, res, next) => {
+  console.log(`→ ${req.method} ${req.originalUrl}`);
+  next();
+});
+
 router.get("/users", async (req, res) => {
   try {
     const users = await Users.findAll();
@@ -70,6 +75,8 @@ router.post("/login", async (req, res) => {
       console.log("Contraseña incorrecta".red);
       return res.status(401).json({ message: "Contraseña incorrecta" });
     }
+
+        console.log("Usuario autenticado:", user.toJSON());
 
     const token = jwt.sign(
       { id: user.id, email: user.email },
