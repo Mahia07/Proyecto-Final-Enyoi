@@ -36,9 +36,6 @@ const LoginForm = () => {
 
   return (
     <>
-    <button id="menuToggle" className="hamburger">
-  ☰
-</button>
 
     <div className="formContainer">
       <form onSubmit={handleSubmit} className="form">
