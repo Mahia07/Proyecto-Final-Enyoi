@@ -609,3 +609,121 @@ button:hover {
   background-color: var(--Color2);
   color: white;
 }
+/* ==================== RESPONSIVE DESIGN ==================== */
+
+@media (max-width: 1024px) {
+  .taskContainer {
+    margin-left: 0;
+    justify-content: center;
+  }
+
+  .alert {
+    margin-left: 0;
+  }
+
+  .sideBar {
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 1rem 0;
+    position: static;
+  }
+
+  .sideBarNav ul {
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+  }
+.icon {
+    display: none;
+  }
+  .liSidebar {
+    padding: 0.5rem;
+  }
+
+  .kanban-board {
+    padding: 1rem;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .kanban-columns {
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+  }
+
+  .kanbanColumn {
+    width: 90%;
+    max-width: 400px;
+  }
+
+  .task-form-container {
+    margin: 1rem;
+  }
+
+  .profile-container {
+    margin: 2rem 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .formContainer {
+    padding: 1rem;
+  }
+.icon {
+    display: none;
+  }
+  .form {
+    padding: 1.5rem;
+    max-width: 100%;
+  }
+
+  .submitButton {
+    padding: 0.6rem;
+  }
+
+  .formText {
+    font-size: 0.9rem;
+  }
+
+  .sideBar {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sideBarNav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .kanban-board {
+    padding: 0.5rem;
+  }
+
+  .kanbanColumn {
+    padding: 0.8rem;
+  }
+
+  .profile-title {
+    font-size: 1.5rem;
+  }
+
+  .taskCard {
+    padding: 0.8rem;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    font-size: 0.9rem;
+  }
+
+  .btn-edit,
+  .btn-primary,
+  .btn-secondary {
+    font-size: 0.9rem;
+    padding: 0.7rem;
+  }
+}

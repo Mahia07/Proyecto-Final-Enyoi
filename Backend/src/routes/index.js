@@ -11,7 +11,6 @@ const port = 3000;
 
 app.use(express.json());
 
-
 app.use(cors({
   origin: [
     'https://proyecto-final-enyoi-qvop.vercel.app',

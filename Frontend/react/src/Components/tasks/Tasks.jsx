@@ -109,14 +109,9 @@ const handleSaveTask = async (taskData) => {
           token: token 
         };
         
-        const createdTaskData = await createTask(newTask);
+         createTask(newTask);
         await fetchTasks()
         
-      setTasks(prevTasks => {
-  const updatedTasks = [...prevTasks, createdTaskData.task];
-  console.log('Tareas actualizadas:', updatedTasks);
-  return updatedTasks;
-});
       }
       setIsFormVisible(false);
       setEditingTask(null);
@@ -271,7 +266,7 @@ const handleSaveTask = async (taskData) => {
 
   return (
     <>
-      {loading && <div className="loading-indicator">Cargando...</div>}
+   
       {error && <div className="error-message">{error}</div>}
 
       <DndContext

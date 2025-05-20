@@ -27,12 +27,12 @@ const Category = () => {
     actions: false
   });
 
-  // Obtener categorías al cargar el componente
+  
   useEffect(() => {
     if (token) {
       fetchCategories();
     } else {
-      setMessage({ text: "No se encontró token de autenticación", type: "error" });
+      setMessage({ text: "", type: "error" });
     }
   }, [token]);
 

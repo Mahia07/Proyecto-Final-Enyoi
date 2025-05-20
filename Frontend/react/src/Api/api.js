@@ -137,7 +137,7 @@ export const updateTask = async ({ taskId, title, description, status, dateLimit
       body: JSON.stringify({ 
         title, 
         description, 
-        status: status === "proceso" ? "en-progreso" : status,
+        status,
         dateLimit,
         categoryId 
       }),

@@ -21,7 +21,7 @@ const RegisterForm = () => {
     e.preventDefault();
     setError(null);
     setSuccess(false);
-    navigate('/Home')
+    navigate('/login')
 
     try {
       await register(formData);

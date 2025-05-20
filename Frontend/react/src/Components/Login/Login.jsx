@@ -35,6 +35,11 @@ const LoginForm = () => {
   };
 
   return (
+    <>
+    <button id="menuToggle" className="hamburger">
+  ☰
+</button>
+
     <div className="formContainer">
       <form onSubmit={handleSubmit} className="form">
         <h2 className="formTitle">Iniciar Sesión</h2>
@@ -77,6 +82,7 @@ const LoginForm = () => {
         </p>
       </form>
     </div>
+    </>
   );
 };
 
